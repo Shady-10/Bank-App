@@ -44,7 +44,6 @@ pipeline{
                 scannerHome = tool 'SONAR4.7'
             }
 
-
             steps{
                 withSonarQubeEnv('SONAR'){
                     sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
@@ -54,5 +53,48 @@ pipeline{
             }
         }
 
+        // Stage Five (Install Dependencies For Root With NPM)
+
+        stage('Root Dependencies'){
+
+            steps{
+                
+                sh 'npm install'
+            }
+        }
+
+        // Stage Six (Install Dependencies For The Backend With NPM)
+
+        stage('Backend Dependencies'){
+
+            steps{
+
+                dir('/root/.jenkins/workspace/Bank-App/app/backend'){
+                    sh 'npm install'
+                }
+            }
+        }
+
+        // Stage Seven (Install Dependencies For The Frontend With NPM)
+
+        stage('Backend Dependencies'){
+
+            steps{
+
+                dir('/root/.jenkins/workspace/Bank-App/app/frontend'){
+                    sh 'npm install'
+                }
+            }
+        }
+
+        // Stage Eight (Deploying Docker Containers)
+
+        stage('Docker'){
+
+            steps{
+
+                sh 'npm run compose:up -d'
+            }
+        }
     }
 }
