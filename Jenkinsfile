@@ -59,12 +59,12 @@ pipeline{
 
          // Stage Five (Performing OWASP Analysis)
 
-        // stage('OWASP Analysis'){
-        //     steps{
-        //         dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
-        //         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-        //     }
-        // }
+        stage('OWASP Analysis'){
+            steps{
+                dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
 
         // Stage Six (Trivy Analysis)
 
@@ -78,20 +78,20 @@ pipeline{
 
         // Stage Seven (SonarQube Scan)
 
-        // stage('SonarQube'){
+        stage('SonarQube'){
 
-        //     environment{
-        //         scannerHome = tool 'SONAR4.7'
-        //     }
+            environment{
+                scannerHome = tool 'SONAR4.7'
+            }
 
-        //     steps{
-        //         withSonarQubeEnv('SONAR'){
-        //             sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
-        //             -Dsonar.projectName=Bank \
-        //             -Dsonar.projectVersion=1.0'''
-        //         }
-        //     }
-        // }
+            steps{
+                withSonarQubeEnv('SONAR'){
+                    sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
+                    -Dsonar.projectName=Bank \
+                    -Dsonar.projectVersion=1.0'''
+                }
+            }
+        }
 
         // Stage Eight (Quality Gate)
 
@@ -116,12 +116,12 @@ pipeline{
         // }
     }
 
-    // post{
-    //     always{
-    //         echo 'Slack Notifications .'
-    //         slackSend channel: '#jenkinscicd',
-    //             color: COLOR_MAP[currentBuild.currentResult],
-    //             message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
-    //     }
-    // }
+    post{
+        always{
+            echo 'Slack Notifications .'
+            slackSend channel: '#jenkinscicd',
+                color: COLOR_MAP[currentBuild.currentResult],
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
+        }
+    }
 }
