@@ -45,17 +45,17 @@ pipeline{
             }
         }
 
-        // // Stage Four (Install Dependencies For The Frontend With NPM)
+        // Stage Four (Install Dependencies For The Frontend With NPM)
 
-        // stage('Frontend Dependencies'){
+        stage('Frontend Dependencies'){
 
-        //     steps{
+            steps{
 
-        //         dir('${JENKINS_HOME/workspace/Bank-App/app/frontend'){
-        //             sh 'npm install'
-        //         }
-        //     }
-        // }
+                dir('${JENKINS_HOME/workspace/Bank-App/app/frontend'){
+                    sh 'npm install'
+                }
+            }
+        }
 
          // Stage Five (Performing OWASP Analysis)
 
@@ -95,13 +95,13 @@ pipeline{
 
          // Stage Eight (Docker)
 
-        // stage('Docker'){
+        stage('Docker'){
 
-        //     steps{
+            steps{
 
-        //         sh 'npm run compose:up -d'
-        //     }
-        // }
+                sh 'npm run compose:up -d'
+            }
+        }
     }
 
     post{
