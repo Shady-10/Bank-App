@@ -68,30 +68,30 @@ pipeline{
 
         // Stage Six (Trivy Analysis)
 
-        stage('Trivy'){
+        // stage('Trivy'){
 
-            steps{
+        //     steps{
 
-                sh 'trivy fs .'
-            }
-        }
+        //         sh 'trivy fs .'
+        //     }
+        // }
 
-        // Stage Seven (SonarQube Scan)
+        // // Stage Seven (SonarQube Scan)
 
-        stage('SonarQube'){
+        // stage('SonarQube'){
 
-            environment{
-                scannerHome = tool 'SONAR4.7'
-            }
+        //     environment{
+        //         scannerHome = tool 'SONAR4.7'
+        //     }
 
-            steps{
-                withSonarQubeEnv('SONAR'){
-                    sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
-                    -Dsonar.projectName=Bank \
-                    -Dsonar.projectVersion=1.0'''
-                }
-            }
-        }
+        //     steps{
+        //         withSonarQubeEnv('SONAR'){
+        //             sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
+        //             -Dsonar.projectName=Bank \
+        //             -Dsonar.projectVersion=1.0'''
+        //         }
+        //     }
+        // }
 
         // Stage Eight (Quality Gate)
 
