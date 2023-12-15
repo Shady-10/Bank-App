@@ -57,63 +57,63 @@ pipeline{
             }
         }
 
-        // // Stage Five (Performing OWASP Analysis)
+        // Stage Five (Performing OWASP Analysis)
 
-        // stage('OWASP Analysis'){
-        //     steps{
-        //         dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
-        //         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-        //     }
-        // }
+        stage('OWASP Analysis'){
+            steps{
+                dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
 
-        // // Stage Six (Trivy Analysis)
+        // Stage Six (Trivy Analysis)
 
-        // stage('Trivy'){
+        stage('Trivy'){
 
-        //     steps{
+            steps{
 
-        //         sh 'trivy fs .'
-        //     }
-        // }
+                sh 'trivy fs .'
+            }
+        }
 
-        // // Stage Seven (SonarQube Scan)
+        // Stage Seven (SonarQube Scan)
 
-        // stage('SonarQube'){
+        stage('SonarQube'){
 
-        //     environment{
-        //         scannerHome = tool 'SONAR4.7'
-        //     }
+            environment{
+                scannerHome = tool 'SONAR4.7'
+            }
 
-        //     steps{
-        //         withSonarQubeEnv('SONAR'){
-        //             sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
-        //             -Dsonar.projectName=Bank \
-        //             -Dsonar.projectVersion=1.0'''
-        //         }
-        //     }
-        // }
+            steps{
+                withSonarQubeEnv('SONAR'){
+                    sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
+                    -Dsonar.projectName=Bank \
+                    -Dsonar.projectVersion=1.0'''
+                }
+            }
+        }
 
-        // // Stage Eight (Quality Gate)
+        // Stage Eight (Quality Gate)
 
-        // stage('Quality Gate Check'){
+        stage('Quality Gate Check'){
 
-        //     steps{
+            steps{
 
-        //         timeout(time: 1 , unit: 'HOURS'){
+                timeout(time: 1 , unit: 'HOURS'){
 
-        //             waitForQualityGate abortPipeline: true
-        //         }
-        //     }
-        // }
-        // // Stage Nine (Docker)
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        }
+        // Stage Nine (Docker)
 
-        // stage('Docker'){
+        stage('Docker'){
 
-        //     steps{
+            steps{
 
-        //         sh 'npm run compose:up -d'
-        //     }
-        // }
+                sh 'npm run compose:up -d'
+            }
+        }
     }
 
     post{
