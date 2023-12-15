@@ -1,3 +1,8 @@
+def COLOR_MAP = [
+    'SUCCESS' : 'good',
+    'FAILURE' : 'danger',
+]
+
 pipeline{
 
     agent any 
@@ -6,6 +11,7 @@ pipeline{
         jdk 'OracleJDK11'
         nodejs 'Node16'
     }
+
     stages{
 
         // Stage One (Pulling The Code From GitHub Repo)
@@ -16,44 +22,8 @@ pipeline{
             }
         }
 
-        // Stage two (Performing OWASP Analysis)
 
-        stage('OWASP Analysis'){
-
-            steps{
-                dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
-        }
-
-        // Stage Three (Trivy Analysis)
-
-        stage('Trivy'){
-
-            steps{
-
-                sh 'trivy fs .'
-            }
-        }
-
-        // Stage Four (SonarQube Scan)
-
-        stage('SonarQube'){
-
-            environment{
-                scannerHome = tool 'SONAR4.7'
-            }
-
-            steps{
-                withSonarQubeEnv('SONAR'){
-                    sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
-                    -Dsonar.projectName=Bank \
-                    -Dsonar.projectVersion=1.0'''
-                }
-            }
-        }
-
-        // Stage Five (Install Dependencies For Root With NPM)
+        // Stage Two (Install Dependencies For Root With NPM)
 
         stage('Root Dependencies'){
 
@@ -63,7 +33,7 @@ pipeline{
             }
         }
 
-        // Stage Six (Install Dependencies For The Backend With NPM)
+        // Stage Three (Install Dependencies For The Backend With NPM)
 
         stage('Backend Dependencies'){
 
@@ -75,9 +45,9 @@ pipeline{
             }
         }
 
-        // Stage Seven (Install Dependencies For The Frontend With NPM)
+        // Stage Four (Install Dependencies For The Frontend With NPM)
 
-        stage('Front Dependencies'){
+        stage('Frontend Dependencies'){
 
             steps{
 
@@ -87,14 +57,71 @@ pipeline{
             }
         }
 
-        // Stage Eight (Deploying Docker Containers)
+        // // Stage Five (Performing OWASP Analysis)
 
-        stage('Docker'){
+        // stage('OWASP Analysis'){
+        //     steps{
+        //         dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
+        //         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        //     }
+        // }
 
-            steps{
+        // // Stage Six (Trivy Analysis)
 
-                sh 'npm run compose:up -d'
-            }
+        // stage('Trivy'){
+
+        //     steps{
+
+        //         sh 'trivy fs .'
+        //     }
+        // }
+
+        // // Stage Seven (SonarQube Scan)
+
+        // stage('SonarQube'){
+
+        //     environment{
+        //         scannerHome = tool 'SONAR4.7'
+        //     }
+
+        //     steps{
+        //         withSonarQubeEnv('SONAR'){
+        //             sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
+        //             -Dsonar.projectName=Bank \
+        //             -Dsonar.projectVersion=1.0'''
+        //         }
+        //     }
+        // }
+
+        // // Stage Eight (Quality Gate)
+
+        // stage('Quality Gate Check'){
+
+        //     steps{
+
+        //         timeout(time: 1 , unit: 'HOURS'){
+
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
+        // // Stage Nine (Docker)
+
+        // stage('Docker'){
+
+        //     steps{
+
+        //         sh 'npm run compose:up -d'
+        //     }
+        // }
+    }
+
+    post{
+        always{
+            echo 'Slack Notifications .'
+            slackSend channel: '#jenkinscicd',
+                color: COLOR_MAP[currentBuild.currentResult],
+                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"
         }
     }
 }
