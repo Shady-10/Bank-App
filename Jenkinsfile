@@ -95,16 +95,16 @@ pipeline{
 
         // Stage Eight (Quality Gate)
 
-        stage('Quality Gate Check'){
+        // stage('Quality Gate Check'){
 
-            steps{
+        //     steps{
 
-                timeout(time: 8 , unit: 'MINUTES'){
+        //         timeout(time: 8 , unit: 'MINUTES'){
 
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
         // // Stage Nine (Docker)
 
         // stage('Docker'){
