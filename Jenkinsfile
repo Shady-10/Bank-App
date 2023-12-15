@@ -77,7 +77,7 @@ pipeline{
 
         // Stage Seven (Install Dependencies For The Frontend With NPM)
 
-        stage('Backend Dependencies'){
+        stage('Front Dependencies'){
 
             steps{
 
