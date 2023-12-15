@@ -69,7 +69,7 @@ pipeline{
 
             steps{
 
-                dir('/root/.jenkins/workspace/Bank-App/app/backend'){
+                dir('${JENKINS_HOME/workspace/Bank-App/app/backend'){
                     sh 'npm install'
                 }
             }
@@ -81,7 +81,7 @@ pipeline{
 
             steps{
 
-                dir('/root/.jenkins/workspace/Bank-App/app/frontend'){
+                dir('${JENKINS_HOME/workspace/Bank-App/app/frontend'){
                     sh 'npm install'
                 }
             }
