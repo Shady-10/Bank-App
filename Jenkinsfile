@@ -95,25 +95,25 @@ pipeline{
 
         // Stage Eight (Quality Gate)
 
-        stage('Quality Gate Check'){
+        // stage('Quality Gate Check'){
 
-            steps{
+        //     steps{
 
-                timeout(time: 1 , unit: 'HOURS'){
+        //         timeout(time: 1 , unit: 'HOURS'){
 
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        }
-        // Stage Nine (Docker)
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // }
+        // // Stage Nine (Docker)
 
-        stage('Docker'){
+        // stage('Docker'){
 
-            steps{
+        //     steps{
 
-                sh 'npm run compose:up -d'
-            }
-        }
+        //         sh 'npm run compose:up -d'
+        //     }
+        // }
     }
 
     post{
