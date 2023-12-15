@@ -23,15 +23,15 @@ pipeline{
         }
 
 
-        // // Stage Two (Install Dependencies For Root With NPM)
+        // Stage Two (Install Dependencies For Root With NPM)
 
-        // stage('Root Dependencies'){
+        stage('Root Dependencies'){
 
-        //     steps{
+            steps{
                 
-        //         sh 'npm install'
-        //     }
-        // }
+                sh 'npm install'
+            }
+        }
 
         // // Stage Three (Install Dependencies For The Backend With NPM)
 
