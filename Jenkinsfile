@@ -44,6 +44,7 @@ pipeline{
                 scannerHome = tool 'SONAR4.7'
             }
 
+
             steps{
                 withSonarQubeEnv('SONAR'){
                     sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
