@@ -57,24 +57,24 @@ pipeline{
         //     }
         // }
 
-        // // Stage Five (Performing OWASP Analysis)
+         // Stage Five (Performing OWASP Analysis)
 
-        // stage('OWASP Analysis'){
-        //     steps{
-        //         dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
-        //         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-        //     }
-        // }
+        stage('OWASP Analysis'){
+            steps{
+                dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }
 
-        // // Stage Six (Trivy Analysis)
+        // Stage Six (Trivy Analysis)
 
-        // stage('Trivy'){
+        stage('Trivy'){
 
-        //     steps{
+            steps{
 
-        //         sh 'trivy fs .'
-        //     }
-        // }
+                sh 'trivy fs .'
+            }
+        }
 
         // Stage Seven (SonarQube Scan)
 
@@ -99,7 +99,7 @@ pipeline{
 
             steps{
 
-                timeout(time: 1 , unit: 'HOURS'){
+                timeout(time: 8 , unit: 'MINUTES'){
 
                     waitForQualityGate abortPipeline: true
                 }
