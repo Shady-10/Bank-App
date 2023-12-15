@@ -33,17 +33,17 @@ pipeline{
             }
         }
 
-        // // Stage Three (Install Dependencies For The Backend With NPM)
+        // Stage Three (Install Dependencies For The Backend With NPM)
 
-        // stage('Backend Dependencies'){
+        stage('Backend Dependencies'){
 
-        //     steps{
+            steps{
 
-        //         dir('${JENKINS_HOME/workspace/Bank-App/app/backend'){
-        //             sh 'npm install'
-        //         }
-        //     }
-        // }
+                dir('${JENKINS_HOME/workspace/Bank-App/app/backend'){
+                    sh 'npm install'
+                }
+            }
+        }
 
         // // Stage Four (Install Dependencies For The Frontend With NPM)
 
