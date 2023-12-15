@@ -23,39 +23,39 @@ pipeline{
         }
 
 
-        // Stage Two (Install Dependencies For Root With NPM)
+        // // Stage Two (Install Dependencies For Root With NPM)
 
-        stage('Root Dependencies'){
+        // stage('Root Dependencies'){
 
-            steps{
+        //     steps{
                 
-                sh 'npm install'
-            }
-        }
+        //         sh 'npm install'
+        //     }
+        // }
 
-        // Stage Three (Install Dependencies For The Backend With NPM)
+        // // Stage Three (Install Dependencies For The Backend With NPM)
 
-        stage('Backend Dependencies'){
+        // stage('Backend Dependencies'){
 
-            steps{
+        //     steps{
 
-                dir('${JENKINS_HOME/workspace/Bank-App/app/backend'){
-                    sh 'npm install'
-                }
-            }
-        }
+        //         dir('${JENKINS_HOME/workspace/Bank-App/app/backend'){
+        //             sh 'npm install'
+        //         }
+        //     }
+        // }
 
-        // Stage Four (Install Dependencies For The Frontend With NPM)
+        // // Stage Four (Install Dependencies For The Frontend With NPM)
 
-        stage('Frontend Dependencies'){
+        // stage('Frontend Dependencies'){
 
-            steps{
+        //     steps{
 
-                dir('${JENKINS_HOME/workspace/Bank-App/app/frontend'){
-                    sh 'npm install'
-                }
-            }
-        }
+        //         dir('${JENKINS_HOME/workspace/Bank-App/app/frontend'){
+        //             sh 'npm install'
+        //         }
+        //     }
+        // }
 
         // Stage Five (Performing OWASP Analysis)
 
