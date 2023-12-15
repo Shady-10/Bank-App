@@ -61,7 +61,7 @@ pipeline{
 
         stage('OWASP Analysis'){
             steps{
-                dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
+                dependencyCheck additionalArguments: '-s ./ --disableYarn' , odcInstallation: 'DC'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
