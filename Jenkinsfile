@@ -46,12 +46,12 @@ pipeline{
 
             steps{
                 withSonarQubeEnv('SONAR'){
-                    sh ''' ${scannerhome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
+                    sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
                     -Dsonar.projectName=Bank \
                     -Dsonar.projectVersion=1.0'''
                 }
             }
         }
-    
+
     }
 }
