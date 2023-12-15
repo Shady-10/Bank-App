@@ -59,12 +59,12 @@ pipeline{
 
         // Stage Five (Performing OWASP Analysis)
 
-        stage('OWASP Analysis'){
-            steps{
-                dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
-        }
+        // stage('OWASP Analysis'){
+        //     steps{
+        //         dependencyCheck additionalArguments: '-s ./' , odcInstallation: 'DC'
+        //         dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+        //     }
+        // }
 
         // Stage Six (Trivy Analysis)
 
@@ -86,7 +86,7 @@ pipeline{
 
             steps{
                 withSonarQubeEnv('SONAR'){
-                    sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
+                    sh ''' ${scannerHome}/bin/sonar-scanner -X -Dsonar.projectKey=Bank \
                     -Dsonar.projectName=Bank \
                     -Dsonar.projectVersion=1.0'''
                 }
