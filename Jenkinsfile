@@ -3,44 +3,36 @@ def COLOR_MAP = [
     'FAILURE' : 'danger',
 ]
 
-pipeline{
+pipeline {
+    agent any
 
-    agent any 
-
-    tools{
+    tools {
         jdk 'OracleJDK11'
         nodejs 'Node16'
     }
 
-    stages{
-
+    stages {
         // Stage One (Pulling The Code From GitHub Repo)
-        
-        stage('Fetching code'){
 
-            steps{
+        stage('Fetching code') {
+            steps {
                 git branch: 'main' , url: 'https://github.com/Shady-10/Pipeline-For-Bank-App.git'
             }
         }
 
-
         // Stage Two (Install Dependencies For Root With NPM)
 
-        stage('Root Dependencies'){
-
-            steps{
-                
+        stage('Root Dependencies') {
+            steps {
                 sh 'npm install'
             }
         }
 
         // Stage Three (Install Dependencies For The Backend With NPM)
 
-        stage('Backend Dependencies'){
-
-            steps{
-
-                dir('${JENKINS_HOME/workspace/Bank-App/app/backend'){
+        stage('Backend Dependencies') {
+            steps {
+                dir('${JENKINS_HOME/workspace/Bank-App/app/backend') {
                     sh 'npm install'
                 }
             }
@@ -48,11 +40,9 @@ pipeline{
 
         // Stage Four (Install Dependencies For The Frontend With NPM)
 
-        stage('Frontend Dependencies'){
-
-            steps{
-
-                dir('${JENKINS_HOME/workspace/Bank-App/app/frontend'){
+        stage('Frontend Dependencies') {
+            steps {
+                dir('${JENKINS_HOME/workspace/Bank-App/app/frontend') {
                     sh 'npm install'
                 }
             }
@@ -60,8 +50,8 @@ pipeline{
 
          // Stage Five (Performing OWASP Analysis)
 
-        stage('OWASP Analysis'){
-            steps{
+        stage('OWASP Analysis') {
+            steps {
                 dependencyCheck additionalArguments: '-s ./ --disableYarn' , odcInstallation: 'DC'
                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
@@ -69,24 +59,21 @@ pipeline{
 
         //Stage Six (Trivy Analysis)
 
-        stage('Trivy'){
-
-            steps{
-
+        stage('Trivy') {
+            steps {
                 sh 'trivy fs .'
             }
         }
 
          // Stage Seven (SonarQube Scan)
 
-        stage('SonarQube'){
-
-            environment{
+        stage('SonarQube') {
+            environment {
                 scannerHome = tool 'SONAR4.7'
             }
 
-            steps{
-                withSonarQubeEnv('SONAR'){
+            steps {
+                withSonarQubeEnv('SONAR') {
                     sh ''' ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=Bank \
                     -Dsonar.projectName=Bank \
                     -Dsonar.projectVersion=1.0'''
@@ -96,17 +83,15 @@ pipeline{
 
          // Stage Eight (Docker)
 
-        stage('Docker'){
-
-            steps{
-
+        stage('Docker') {
+            steps {
                 sh 'npm run compose:up -d'
             }
         }
     }
 
-    post{
-        always{
+    post {
+        always {
             echo 'Slack Notifications .'
             slackSend channel: '#jenkinscicd',
                 color: COLOR_MAP[currentBuild.currentResult],
