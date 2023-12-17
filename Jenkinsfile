@@ -19,7 +19,7 @@ pipeline{
         stage('Fetching code'){
 
             steps{
-                git branch: 'main' , url: 'https://github.com/Shady-10/Bank-App.git'
+                git branch: 'main' , url: 'https://github.com/Shady-10/Pipeline-For-Bank-App.git'
             }
         }
 
