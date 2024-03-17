@@ -1,3 +1,55 @@
+# Jenkins CI/CD
+
+## Overview
+
+The pipeline is designed to streamline the development workflow of the bank application by automating repetitive tasks and ensuring consistent deployment practices. It integrates various tools and technologies, such as Node.js, OWASP Dependency Check, Trivy, SonarQube, and Docker, to provide a robust and efficient CI/CD process. By implementing this pipeline, the project aims to improve the overall quality, security, and reliability of the application while reducing manual intervention and potential errors.
+
+
+## Pipeline Stages
+
+1. **Fetching code:** Pulls the code from the GitHub repository.
+2. **Root Dependencies:** Installs dependencies for the root of the application using npm.
+3. **Backend Dependencies:** Installs dependencies for the backend of the application using npm.
+4. **Frontend Dependencies:** Installs dependencies for the frontend of the application using npm.
+5. **OWASP Analysis:** Performs security analysis using OWASP Dependency Check.
+6. **Trivy Analysis:** Conducts security scanning using Trivy.
+7. **SonarQube Scan:** Analyzes code quality with SonarQube.
+8. **Docker:** Deploys the application using Docker.
+
+## How to Use
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/Shady-10/Pipeline-For-Bank-App.git
+   ```
+
+2. **Configure Jenkins:**
+   - Install Jenkins on your server.
+   - Set up Jenkins credentials for GitHub, SonarQube, and Docker.
+
+3. **Configure Pipeline:**
+   - Update the Jenkinsfile with your specific project configurations.
+
+4. **Run the Pipeline:**
+   - Trigger the pipeline in Jenkins to start the build, test, and deployment process.
+
+5. **Monitor the Pipeline:**
+   - Monitor the pipeline progress in Jenkins and review the results of each stage.
+
+6. **Receive Notifications:**
+   - Receive Slack notifications for build results and status updates.
+
+
+## Additional Notes
+
+- This pipeline is designed for the bank application project and may need to be customized for other projects.
+- Ensure that all necessary tools and dependencies are installed and configured before running the pipeline.
+
+
+
+
+
+
 # :coin: Full Stack Bank :dollar:
 
 ![Preview](./screenshots/login.png)
